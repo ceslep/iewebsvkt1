@@ -7,6 +7,8 @@
      }
 </script>
 
+
+
 <nav class="navbar navbar-expand-xl navbar-light bg-primary fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand text-white fs-7" href="/">IEdeOccidente <span class="d-none"
@@ -43,7 +45,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown admin">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="administrativoMenuLink"
+                    <a class="nav-link dropdown-toggle text-white" href="#!" id="administrativoMenuLink"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Administrativo
                     </a>
@@ -137,7 +139,8 @@
                     </a></li>
             </ul>
             <div class="d-flex justify-content-end w-100 pt-2 pt-xl-0">
-                <button class="btn btn-success ingresarDocente" on:click={login}>Ingresar
+                <button class="btn btn-success ingresarDocente" on:click={login} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="true" aria-label="Toggle navigation">Ingresar
                     👨‍🏫
                 </button>
             </div>
