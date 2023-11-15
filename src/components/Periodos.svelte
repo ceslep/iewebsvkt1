@@ -1,8 +1,10 @@
 <script lang="ts">
   import Spinnermd from "./Spinnermd.svelte";
-  import { type Periodo } from "../types/tipos.ts";
+  import type { Periodo } from "../types/tipos";
   import { afterUpdate, onMount } from "svelte";
   let periodos: Periodo[] = [];
+
+  export let esPermitido:boolean;
 
   onMount(async () => {
     const response = await fetch(
@@ -41,7 +43,7 @@
       >Período
       <span
         class="spinner-border spinner-border-sm spperiodo d-none"
-        role="status"
+        role="status" 
       >
         <span class="visually-hidden">Loading...</span>
       </span>
@@ -54,6 +56,7 @@
       name="periodo"
       class="form-select"
       tabindex="-1"
+      disabled={!esPermitido}
     >
       <option value="" />
       {#each periodos as { nombre, selected, ind }}
