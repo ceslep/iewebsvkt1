@@ -6,6 +6,7 @@
 	const dispatch = createEventDispatcher();
 
 	const blur = async () => {
+		if (!contrasena) return
 		const response = await fetch(`${$URL}getMaestra.php`, {
 			method: 'POST',
 			body: JSON.stringify({ contrasena })

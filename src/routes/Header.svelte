@@ -1,8 +1,20 @@
 <script lang="ts">
-     import { goto } from '$app/navigation';
+     import { afterNavigate, goto } from '$app/navigation';
+	import { afterUpdate, onMount } from 'svelte';
 
+     onMount(()=>{
+        console.log("mount")
+     })
 
+     afterUpdate(()=>{
+        console.log("update")
+     })
+
+  
+
+    export let blogin:boolean;
      const login=()=>{
+        blogin=true;
         goto('/login');
      }
 </script>
@@ -147,3 +159,4 @@
         </div>
     </div>
 </nav>
+

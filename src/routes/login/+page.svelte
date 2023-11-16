@@ -4,10 +4,11 @@
 	import BotonLogin from './../../components/BotonLogin.svelte';
 	import Periodos from './../../components/Periodos.svelte';
 	import { afterUpdate } from 'svelte';
+	import ContrasenaSeguridad from '../../components/ContrasenaSeguridad.svelte';
 
 	let identificacion: string;
 	let contrasena: string;
-	let contrasenaseguridad:string="123456789";
+	let contrasenaseguridad:string;
 	let esPermitido: boolean = false;
 
 	afterUpdate(()=>{
@@ -37,14 +38,7 @@
 				</div>
 				<div class="d-flex gap-2 w-100">
 					<div class="form-group">
-						<label for="contrasenaseguridad">Código de Seguridad</label>
-						<input
-							type="number"
-							name="contrasenaseguridad"
-							id="contrasenaseguridad"
-							class="form-control"
-							required
-						/>
+						<ContrasenaSeguridad bind:contrasenaseguridad={contrasenaseguridad}/>
 					</div>
 					<div class="form-group grid">
 						<label for="solcod" />

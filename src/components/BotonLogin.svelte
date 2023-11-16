@@ -2,9 +2,9 @@
 	import { afterUpdate, createEventDispatcher } from "svelte";
     import {MAESTRO, URL} from "../stores";
     import Swal from "sweetalert2";
-    export let identificacion:string="";
-    export let contrasenaseguridad:string="";
-    export let contrasena:string="";
+    export let identificacion:string;
+    export let contrasenaseguridad:string;
+    export let contrasena:string;
 
     import { goto } from '$app/navigation';
 
@@ -13,7 +13,6 @@
 
 
     afterUpdate(()=>{
-        console.log(identificacion)
     });
 
     let btnText:String="Aceptar";
@@ -22,10 +21,10 @@
 
     const dispatch=createEventDispatcher();
 
-    const getCodigoValido = async (docente:String, cSeguridad:String, ctrasena:String):Promise<boolean> => {
+    const getCodigoValido = async (identificacion:String, codigo:String, contrasena:String):Promise<boolean> => {
     const response = await fetch(`${$URL}validateCode.php`, {
         method: "POST",
-        body: JSON.stringify({ docente, cSeguridad, ctrasena })
+        body: JSON.stringify({ identificacion, codigo, contrasena })
     })
     let res:boolean;
     const { msg } = await response.json();
@@ -34,9 +33,8 @@
 
 
    const verificarLogin = async():Promise<boolean>=>{
-    try {
+    
         btnDisabled=false;
-        const codigo = contrasenaseguridad;
         console.log(identificacion)
         if ((identificacion === "") || (identificacion.length < 4)) {
             await Swal.fire({
@@ -54,9 +52,11 @@
             btnDisabled=true;
             return false;
         }
-        if (((codigo == "") || (codigo.length < 5)) && (await getCodigoValido(identificacion,contrasenaseguridad,contrasena))) {
+        const valido:boolean=await getCodigoValido(identificacion,contrasenaseguridad,contrasena);
+        console.log({valido})
+        if  (!valido) {
             await Swal.fire({
-                title: "Debe colocar un código válido.", icon: 'error'
+                title: "Debe colocar un código válido, o la contraseña está mal escrita.", icon: 'error'
             });
             btnDisabled=true;
             return false;
@@ -138,9 +138,7 @@
             });
         }
         btnDisabled=true;
-    } catch (e) {
-        console.log(e);
-    }
+  
     return false;
 }
 
@@ -157,7 +155,9 @@
 	type="button"
 	class="btn btn-primary rounded-0 ingDocentes ms-2"
 	>{btnText}<i class="bi bi-search ms-2" />
-	<span class="spinner-border spinner-border-sm spcid d-none" role="status">
+    {#if !btnDisabled}
+	<span class="spinner-border spinner-border-sm" role="status">
 		<span class="visually-hidden">Loading...</span>
 	</span>
+    {/if}
 </button>
